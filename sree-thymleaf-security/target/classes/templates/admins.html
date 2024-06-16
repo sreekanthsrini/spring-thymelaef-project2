@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            margin: 15px;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-back {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Admin Dashboard</h1>
+        
+        <div class="card">
+            <div class="card-header">
+                Seller Activities
+            </div>
+            <div class="card-body" id="sellerActivities">
+                <!-- Seller activities will be populated here -->
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                Buyer Activities
+            </div>
+            <div class="card-body" id="buyerActivities">
+                <!-- Buyer activities will be populated here -->
+            </div>
+        </div>
+
+        <div class="btn-back">
+            <form action="/" method="get">
+                <input type="submit" value="Back to Home" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Mock data for demonstration
+        const sellerProducts = [
+            { name: "Smartphone", description: "Latest model with 6.5-inch display and 128GB storage.", price: 15000, image: "./image/phn.jpeg" },
+            { name: "Laptop", description: "Powerful laptop with 16GB RAM and 512GB SSD.", price: 60000, image: "./image/lap.jpeg" }
+        ];
+
+        const buyerCart = [
+            { name: "Smartphone", price: 15000 },
+            { name: "Headphones", price: 3500 }
+        ];
+
+        // Populate seller activities
+        const sellerActivities = document.getElementById('sellerActivities');
+        sellerProducts.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'card';
+            productCard.innerHTML = `
+                <div class="card-body">
+                    <img src="${product.image}" alt="${product.name}" class="img-thumbnail" style="max-width: 100px;">
+                    <h5 class="card-title">${product.name}</h5>
+                    <p class="card-text">${product.description}</p>
+                    <p class="card-text"><strong>Price:</strong> ₹${product.price}</p>
+                </div>
+            `;
+            sellerActivities.appendChild(productCard);
+        });
+
+        // Populate buyer activities
+        const buyerActivities = document.getElementById('buyerActivities');
+        let total = 0;
+        buyerCart.forEach(item => {
+            const cartItem = document.createElement('div');
+            cartItem.className = 'card';
+            cartItem.innerHTML = `
+                <div class="card-body">
+                    <h5 class="card-title">${item.name}</h5>
+                    <p class="card-text"><strong>Price:</strong> ₹${item.price}</p>
+                </div>
+            `;
+            total += item.price;
+            buyerActivities.appendChild(cartItem);
+        });
+
+        const totalCard = document.createElement('div');
+        totalCard.className = 'card';
+        totalCard.innerHTML = `
+            <div class="card-body">
+                <h5 class="card-title">Total Cart Value</h5>
+                <p class="card-text"><strong>Total:</strong> ₹${total}</p>
+            </div>
+        `;
+        buyerActivities.appendChild(totalCard);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

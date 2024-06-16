@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            color: #555;
+        }
+
+        input[type="text"], input[type="number"], textarea, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background: #28a745;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        .product-details {
+            margin-top: 30px;
+        }
+
+        .product-details img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product-details div {
+            margin-top: 15px;
+        }
+
+        .btn {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sell Your Product</h1>
+        <form id="sellerForm">
+            <label for="productName">Product Name</label>
+            <input type="text" id="productName" name="productName" required>
+            
+            <label for="productDescription">Product Description</label>
+            <textarea id="productDescription" name="productDescription" rows="4" required></textarea>
+            
+            <label for="productPrice">Product Price ($)</label>
+            <input type="number" id="productPrice" name="productPrice" min="0" step="0.01" required>
+            
+            <label for="productImage">Product Image</label>
+            <input type="file" id="productImage" name="productImage" accept="image/*" required>
+            
+            <button type="submit">Submit</button>
+        </form>
+        
+        <div class="product-details" id="productDetails" style="display: none;">
+            <h2>Product Details</h2>
+            <img id="displayImage" alt="Product Image">
+            <div><strong>Name:</strong> <span id="displayName"></span></div>
+            <div><strong>Description:</strong> <span id="displayDescription"></span></div>
+            <div><strong>Price:</strong> $<span id="displayPrice"></span></div>
+        </div>
+
+        <div class="btn">
+            <form action="/" method="get">
+                <input type="submit" value="Back to Home">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('sellerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const productName = document.getElementById('productName').value;
+            const productDescription = document.getElementById('productDescription').value;
+            const productPrice = document.getElementById('productPrice').value;
+            const productImage = document.getElementById('productImage').files[0];
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('displayImage').src = e.target.result;
+            };
+            reader.readAsDataURL(productImage);
+
+            document.getElementById('displayName').textContent = productName;
+            document.getElementById('displayDescription').textContent = productDescription;
+            document.getElementById('displayPrice').textContent = productPrice;
+
+            document.getElementById('productDetails').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
